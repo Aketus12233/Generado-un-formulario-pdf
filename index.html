@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitud de Préstamo - Flex Crédit</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: auto;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            color: #555;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Solicitud de Préstamo - Flex Crédit</h1>
+    <form id="loanForm">
+        <label for="fullName">Nombre y Apellidos:</label>
+        <input type="text" id="fullName" name="fullName" required>
+
+        <label for="dob">Fecha de nacimiento:</label>
+        <input type="date" id="dob" name="dob" required>
+
+        <label for="country">País de residencia:</label>
+        <input type="text" id="country" name="country" required>
+
+        <label for="email">Correo electrónico:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="phone">Número de teléfono:</label>
+        <input type="tel" id="phone" name="phone" required>
+
+        <label for="amount">Monto solicitado:</label>
+        <input type="number" id="amount" name="amount" required>
+
+        <label for="currency">Moneda:</label>
+        <select id="currency" name="currency" required>
+            <option value="EUR">EUR</option>
+            <option value="USD">USD</option>
+            
+        </select>
+
+        <label for="duration">Duración (meses):</label>
+        <input type="number" id="duration" name="duration" required>
+
+        <label for="loanReason">Motivo del préstamo:</label>
+        <input type="text" id="loanReason" name="loanReason" required>
+
+        <label for="profession">Profesión:</label>
+        <input type="text" id="profession" name="profession" required>
+
+        <label for="salary">Salario mensual:</label>
+        <input type="number" id="salary" name="salary" required>
+
+        <label for="maritalStatus">Estado civil:</label>
+        <select id="maritalStatus" name="maritalStatus" required>
+            <option value="Casado(a)">Casado(a)</option>
+            <option value="Soltero(a)">Soltero(a)</option>
+            <option value="Divorciado(a)">Divorciado(a)</option>
+        </select>
+
+        <label for="children">Número de hijos:</label>
+        <input type="number" id="children" name="children" required>
+
+        <button type="button" id="generatePDF">Generar PDF</button>
+    </form>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+document.getElementById('generatePDF').addEventListener('click', function() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    // Configuración de colores y diseño del PDF
+    doc.setTextColor(0, 0, 255); // Color azul
+    doc.setFontSize(10);
+    doc.text("Flex Crédit", 105, 10, null, null, 'center');
+    doc.text("14ième Régime d'Infanterie (Avenue du), 1814 (Rue)", 105, 16, null, null, 'center');
+    doc.text("Correo: flexcredit49@gmail.com", 105, 22, null, null, 'center');
+
+    // Marca de agua (texto "Flex" en fondo de la página)
+    doc.setFontSize(60);
+    doc.setTextColor(240, 240, 240);
+    doc.text("Flex crédit", 35, 150, null, 45);
+
+    // Restablecer color del texto
+    doc.setFontSize(12);
+    doc.setTextColor(0, 0, 0);
+
+    // Obtener los valores del formulario
+    const fullName = document.getElementById('fullName').value;
+    const dob = document.getElementById('dob').value;
+    const country = document.getElementById('country').value;
+    const email = document.getElementById('email').value;
+    const phone = document.getElementById('phone').value;
+    const amount = document.getElementById('amount').value;
+    const currency = document.getElementById('currency').value;
+    const duration = document.getElementById('duration').value;
+    const loanReason = document.getElementById('loanReason').value;
+    const profession = document.getElementById('profession').value;
+    const salary = document.getElementById('salary').value;
+    const maritalStatus = document.getElementById('maritalStatus').value;
+    const children = document.getElementById('children').value;
+
+    // Encabezado del documento
+    doc.setFontSize(16);
+    doc.setTextColor(0, 0, 255);
+    doc.text("Solicitud de Préstamo", 105, 40, null, null, 'center');
+
+    // Contenido del PDF con diferentes tamaños de texto
+    doc.setFontSize(12);
+    doc.setTextColor(0, 0, 0);
+    doc.text(`Nombre y Apellidos: ${fullName}`, 20, 50);
+    doc.text(`Fecha de nacimiento: ${dob}`, 20, 60);
+    doc.text(`País de residencia: ${country}`, 20, 70);
+    doc.text(`Correo electrónico: ${email}`, 20, 80);
+    doc.text(`Número de teléfono: ${phone}`, 20, 90);
+    doc.text(`Monto solicitado: ${amount} ${currency}`, 20, 100);
+    doc.text(`Duración (meses): ${duration}`, 20, 110);
+    doc.text(`Motivo del préstamo: ${loanReason}`, 20, 120);
+    doc.text(`Profesión: ${profession}`, 20, 130);
+    doc.text(`Salario mensual: ${salary}`, 20, 140);
+    doc.text(`Estado civil: ${maritalStatus}`, 20, 150);
+    doc.text(`Número de hijos: ${children}`, 20, 160);
+
+    // Firma de la institución
+    doc.setFontSize(12);
+    doc.text("Firma de la institución: ____________________________", 20, 180);
+
+    // Espacio para la firma del solicitante
+    doc.text("Firma del solicitante: ____________________________", 20, 200);
+
+    // Generar y descargar el PDF
+    doc.save('solicitud_prestamo_flex_credit.pdf');
+});
+</script>
+
+</body>
+</html>
+cript>
+
+</body>
+</html>
